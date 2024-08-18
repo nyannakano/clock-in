@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Groups extends Model
+class Group extends Model
 {
     public $timestamps = false;
 
@@ -15,5 +15,10 @@ class Groups extends Model
     public function employees()
     {
         return $this->hasMany(Employee::class);
+    }
+
+    public function configuration()
+    {
+        return $this->belongsTo(Configuration::class);
     }
 }

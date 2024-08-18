@@ -29,11 +29,21 @@ class Employee extends Model
 
     public function group()
     {
-        return $this->belongsTo(Groups::class);
+        return $this->belongsTo(Group::class);
     }
 
     public function workload()
     {
         return $this->hasOne(Workload::class);
+    }
+
+    public function clockins()
+    {
+        return $this->hasMany(Clockin::class);
+    }
+
+    public function justifications()
+    {
+        return $this->hasMany(Justification::class);
     }
 }
