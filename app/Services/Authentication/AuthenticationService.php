@@ -3,6 +3,7 @@
 namespace App\Services\Authentication;
 
 use App\Models\User;
+use App\Repositories\UserRepository;
 use App\Services\Employees\EmployeeService;
 use Illuminate\Support\Facades\DB;
 
@@ -35,7 +36,7 @@ class AuthenticationService
         DB::beginTransaction();
 
         try {
-            $user = User::create([
+            $user = UserRepository::create([
                 'email' => $request->email,
                 'password' => bcrypt($request->password)
             ]);
@@ -43,6 +44,16 @@ class AuthenticationService
             $employeeService = new EmployeeService();
 
             $employee_response = $employeeService->registerEmployee($user->id, $request->all());
+
+            if ($employee_response['status'] === 'error') {
+                DB::rollBack();
+
+                return ([
+                    'message' => 'Registration failed',
+                    'status' => 'error',
+                    'error' => $employee_response['error']
+                ]);
+            }
 
             if (!$employee_response['employee']) {
                 DB::rollBack();
@@ -144,7 +155,7 @@ class AuthenticationService
 
     public function forgotPassword($data)
     {
-        $user = User::where('email', $data->email)->first();
+        $user = UserRepository::findByEmail($data->email);
 
         if (!$user) {
             return ([
@@ -165,7 +176,7 @@ class AuthenticationService
     public function resetPassword($data): array
     {
         try {
-            $user = User::where('email', $data->email)->first();
+            $user = UserRepository::findByEmail($data->email);
             DB::beginTransaction();
 
             if (!$user) {
