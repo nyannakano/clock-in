@@ -8,6 +8,10 @@ This is an open source project developed using Laravel 11. This API provides fun
 
 Laravel 11, MySQL, Docker (with Sail), Sanctum, Telescope.
 
+## Architecture
+
+For now, the project is being developed using the MVC architecture, with a Service Layer for business rules. The controller layer is responsible for receiving the requests and returning the responses.
+
 ## Installation
 
 1. Clone the repository
