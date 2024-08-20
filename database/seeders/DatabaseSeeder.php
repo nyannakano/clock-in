@@ -17,17 +17,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-//        $user = User::factory()->create([
-//            'email' => 'admin@example.com',
-//            'password' => bcrypt('password'),
-//        ]);
-//
-//        Administrator::factory()->create([
-//            'name' => 'Admin',
-//            'user_id' => $user->id,
-//        ]);
+        $user = User::factory()->create([
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password'),
+        ]);
 
-        $group = Group::factory()->create([
+        Administrator::factory()->create([
+            'name' => 'Admin',
+            'user_id' => $user->id,
+        ]);
+
+        Group::factory()->create([
             'name' => 'default'
         ]);
     }

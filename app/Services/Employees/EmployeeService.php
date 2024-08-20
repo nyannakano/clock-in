@@ -2,18 +2,17 @@
 
 namespace App\Services\Employees;
 
-use App\Models\Employee;
-use App\Models\Group;
-use App\Models\User;
+use App\Repositories\EmployeeRepository;
+use App\Repositories\GroupRepository;
 
 class EmployeeService
 {
     public function registerEmployee($user_id, $data)
     {
         try {
-            $group = Group::where('name', 'default')->first();
+            $group = GroupRepository::findByName('default');
 
-            $employee = Employee::create([
+            $employee = EmployeeRepository::create([
                 'name' => $data['name'],
                 'user_id' => $user_id,
                 'group_id' => $group->id,
