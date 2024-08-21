@@ -9,15 +9,14 @@ use App\Requests\RegisterRequest;
 use App\Requests\ResetPasswordRequest;
 use App\Requests\VerifyEmailRequest;
 use App\Services\Authentication\AuthenticationService;
-use Illuminate\Http\Request;
 
 class AuthenticationController extends Controller
 {
     private AuthenticationService $authService;
 
-    public function __construct(AuthenticationService $authService)
+    public function __construct()
     {
-        $this->authService = $authService;
+        $this->authService = new AuthenticationService();
     }
 
     public function login(LoginRequest $request)
